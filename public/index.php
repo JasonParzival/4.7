@@ -31,122 +31,29 @@
 
         $url = $_SERVER["REQUEST_URI"];
 
-        //$title = "";
-        //$template = "";
-        //$temp = "";
         $context = [];
 
         $controller = new Controller404($twig);
 
-        /*$nav = [ // добавил список словариков
-            [
-                "title" => "Главная",
-                "url" => "/",
-            ],
-            [
-                "title" => "Уитли",
-                "url" => "/wheatley",
-            ],
-            [
-                "title" => "ГЛэДОС",
-                "url" => "/GLaDOS",
-            ]
-        ];*/
-        /*$menuWheatley = [
-            [
-                "btn" => "primary",
-                "title" => "Уитли",
-                "url" => "/wheatley",
-            ],
-            [
-                "btn" => "link",
-                "title" => "Картинка",
-                "url" => "/wheatley/image",
-            ],
-            [
-                "btn" => "link",
-                "title" => "Описание",
-                "url" => "/wheatley/info",
-            ]
-        ];
-
-        $menuGLaDOS = [
-            [
-                "btn" => "primary",
-                "title" => "ГЛэДОС",
-                "url" => "/GLaDOS",
-            ],
-            [
-                "btn" => "link",
-                "title" => "Картинка",
-                "url" => "/GLaDOS/image",
-            ],
-            [
-                "btn" => "link",
-                "title" => "Описание",
-                "url" => "/GLaDOS/info",
-            ]
-        ];*/
-
-        /*$newnav = [
-            [
-                "title" => "Картинка",
-                "url" => "image",
-            ],
-            [
-                "title" => "Описание",
-                "url" => "info",
-            ]
-        ];*/
-
-        // тут теперь просто заполняю значение переменных
         if ($url == "/") {
-           // $title = "Главная";
-            //$template = "main.twig";
-            $controller = new MainController($twig); // создаем экземпляр контроллера для главной страницы
+            $controller = new MainController($twig);
         } elseif (preg_match("#^/GLaDOS#", $url)) {
-            //$title = "ГЛэДОС";
-            //$template = "GLaDOS.twig";
             $controller = new GLaDOSController($twig);
 
             if (preg_match("#^/GLaDOS/image#", $url)) {
-                //$template = "base_image2.twig";
-                //$context['image'] = "/images/GLaDOS.gif";
-                //$temp = "Картинка";
                 $controller = new GLaDOSImageController($twig);
             } elseif (preg_match("#^/GLaDOS/info#", $url)) {
-                //$template = "GLaDOS_info.twig";
-                //$temp = "Описание";
                 $controller = new GLaDOSInfoController($twig);
             }
         } elseif (preg_match("#^/wheatley#", $url)) {
-            //$title = "Уитли";
-            //$template = "wheatley.twig";
             $controller = new WheatleyController($twig);
 
             if (preg_match("#^/wheatley/image#", $url)) {
-                //$template = "base_image1.twig";
-                //$context['image'] = "../images/wheatley.jpg";
-                //$temp = "Картинка";
                 $controller = new WheatleyImageController($twig);
             } elseif (preg_match("#^/wheatley/info#", $url)) {
-                //$template = "wheatley_info.twig";
-                //$temp = "Описание";
                 $controller = new WheatleyInfoController($twig);
             }
         }
-
-        //$context['title'] = $title;
-        //$context['nav'] = $nav;
-        //$context['menuWheatley'] = $menuWheatley;
-        //$context['menuGLaDOS'] = $menuGLaDOS;
-        //$context['newnav'] = $newnav;
-        //$context['temp'] = $temp;
-
-        // ну и рендерю
-        //echo $twig->render($template, $context);
-
-        // проверяем если controller не пустой, то рендерим страницу
         if ($controller) {
             $controller->get();
         }
