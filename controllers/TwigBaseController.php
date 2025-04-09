@@ -4,6 +4,7 @@ require_once "BaseController.php"; // обязательно импортим Ba
 class TwigBaseController extends BaseController {
     public $title = ""; // название страницы
     public $template = ""; // шаблон страницы
+    public $temp = "";
     public $nav = [ // добавил список словариков
         [
             "title" => "Главная",
@@ -53,6 +54,17 @@ class TwigBaseController extends BaseController {
             "url" => "/GLaDOS/info",
         ]
     ];
+
+    public $newnav = [
+        [
+            "title" => "Картинка",
+            "url" => "image",
+        ],
+        [
+            "title" => "Описание",
+            "url" => "info",
+        ]
+    ];
     protected \Twig\Environment $twig; // ссылка на экземпляр twig, для рендернига
     
     // теперь пишем конструктор, 
@@ -74,6 +86,8 @@ class TwigBaseController extends BaseController {
         $context['nav'] = $this->nav;
         $context['menuWheatley'] = $this->menuWheatley;
         $context['menuGLaDOS'] = $this->menuGLaDOS;
+        $context['newnav'] = $this->newnav;
+        $context['temp'] = $this->temp;
 
         return $context;
     }

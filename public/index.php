@@ -13,6 +13,15 @@
         <?php 
         require_once '../vendor/autoload.php';
         require_once "../controllers/MainController.php";
+        require_once "../controllers/WheatleyController.php";
+        require_once "../controllers/WheatleyImageController.php";
+        require_once "../controllers/WheatleyInfoController.php";
+        require_once "../controllers/GLaDOSController.php";
+        require_once "../controllers/GLaDOSImageController.php";
+        require_once "../controllers/GLaDOSInfoController.php";
+
+        require_once "../controllers/Controller404.php";
+
         require_once "../controllers/BaseController.php";
         require_once "../controllers/TwigBaseController.php";
 
@@ -24,10 +33,10 @@
 
         //$title = "";
         //$template = "";
-        $temp = "";
+        //$temp = "";
         $context = [];
 
-        $controller = null; // создаем переменную под контроллер
+        $controller = new Controller404($twig);
 
         /*$nav = [ // добавил список словариков
             [
@@ -79,7 +88,7 @@
             ]
         ];*/
 
-        $newnav = [
+        /*$newnav = [
             [
                 "title" => "Картинка",
                 "url" => "image",
@@ -88,7 +97,7 @@
                 "title" => "Описание",
                 "url" => "info",
             ]
-        ];
+        ];*/
 
         // тут теперь просто заполняю значение переменных
         if ($url == "/") {
@@ -96,28 +105,34 @@
             //$template = "main.twig";
             $controller = new MainController($twig); // создаем экземпляр контроллера для главной страницы
         } elseif (preg_match("#^/GLaDOS#", $url)) {
-            $title = "ГЛэДОС";
-            $template = "GLaDOS.twig";
+            //$title = "ГЛэДОС";
+            //$template = "GLaDOS.twig";
+            $controller = new GLaDOSController($twig);
 
             if (preg_match("#^/GLaDOS/image#", $url)) {
-                $template = "base_image2.twig";
-                $context['image'] = "/images/GLaDOS.gif";
-                $temp = "Картинка";
+                //$template = "base_image2.twig";
+                //$context['image'] = "/images/GLaDOS.gif";
+                //$temp = "Картинка";
+                $controller = new GLaDOSImageController($twig);
             } elseif (preg_match("#^/GLaDOS/info#", $url)) {
-                $template = "GLaDOS_info.twig";
-                $temp = "Описание";
+                //$template = "GLaDOS_info.twig";
+                //$temp = "Описание";
+                $controller = new GLaDOSInfoController($twig);
             }
         } elseif (preg_match("#^/wheatley#", $url)) {
-            $title = "Уитли";
-            $template = "wheatley.twig";
+            //$title = "Уитли";
+            //$template = "wheatley.twig";
+            $controller = new WheatleyController($twig);
 
             if (preg_match("#^/wheatley/image#", $url)) {
-                $template = "base_image1.twig";
-                $context['image'] = "../images/wheatley.jpg";
-                $temp = "Картинка";
+                //$template = "base_image1.twig";
+                //$context['image'] = "../images/wheatley.jpg";
+                //$temp = "Картинка";
+                $controller = new WheatleyImageController($twig);
             } elseif (preg_match("#^/wheatley/info#", $url)) {
-                $template = "wheatley_info.twig";
-                $temp = "Описание";
+                //$template = "wheatley_info.twig";
+                //$temp = "Описание";
+                $controller = new WheatleyInfoController($twig);
             }
         }
 
@@ -125,8 +140,8 @@
         //$context['nav'] = $nav;
         //$context['menuWheatley'] = $menuWheatley;
         //$context['menuGLaDOS'] = $menuGLaDOS;
-        $context['newnav'] = $newnav;
-        $context['temp'] = $temp;
+        //$context['newnav'] = $newnav;
+        //$context['temp'] = $temp;
 
         // ну и рендерю
         //echo $twig->render($template, $context);
