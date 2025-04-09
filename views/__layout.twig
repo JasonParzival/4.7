@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"  rel="stylesheet" />
 </head>
 <body>
-    <div>
+    <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#"><i class="fas fa-cake-candles"></i></a>
@@ -29,7 +29,7 @@
                         </li>-->
                         {% for item in nav %}
                             <li class="nav-item">
-                                <a href="{{item.url}}" class="nav-link {{ title == item.title ? 'active' }}" {{title == item.title ? 'aria-current="page"'}}>{{item.title}}</a>
+                                <a href="{{ item.url }}" class="nav-link {{ title == item.title ? 'active' }}" {{title == item.title ? 'aria-current="page"'}}>{{item.title}}</a>
                             </li>
                         {% endfor %}
                     </ul>

@@ -12,6 +12,9 @@
     <div class="container">
         <?php 
         require_once '../vendor/autoload.php';
+        require_once "../controllers/MainController.php";
+        require_once "../controllers/BaseController.php";
+        require_once "../controllers/TwigBaseController.php";
 
         $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -19,11 +22,14 @@
 
         $url = $_SERVER["REQUEST_URI"];
 
-        $title = "";
-        $template = "";
+        //$title = "";
+        //$template = "";
         $temp = "";
         $context = [];
-        $nav = [ // добавил список словариков
+
+        $controller = null; // создаем переменную под контроллер
+
+        /*$nav = [ // добавил список словариков
             [
                 "title" => "Главная",
                 "url" => "/",
@@ -36,8 +42,8 @@
                 "title" => "ГЛэДОС",
                 "url" => "/GLaDOS",
             ]
-        ];
-        $menuWheatley = [
+        ];*/
+        /*$menuWheatley = [
             [
                 "btn" => "primary",
                 "title" => "Уитли",
@@ -71,7 +77,7 @@
                 "title" => "Описание",
                 "url" => "/GLaDOS/info",
             ]
-        ];
+        ];*/
 
         $newnav = [
             [
@@ -86,8 +92,9 @@
 
         // тут теперь просто заполняю значение переменных
         if ($url == "/") {
-            $title = "Главная";
-            $template = "main.twig";
+           // $title = "Главная";
+            //$template = "main.twig";
+            $controller = new MainController($twig); // создаем экземпляр контроллера для главной страницы
         } elseif (preg_match("#^/GLaDOS#", $url)) {
             $title = "ГЛэДОС";
             $template = "GLaDOS.twig";
@@ -114,15 +121,20 @@
             }
         }
 
-        $context['title'] = $title;
-        $context['nav'] = $nav;
-        $context['menuWheatley'] = $menuWheatley;
-        $context['menuGLaDOS'] = $menuGLaDOS;
+        //$context['title'] = $title;
+        //$context['nav'] = $nav;
+        //$context['menuWheatley'] = $menuWheatley;
+        //$context['menuGLaDOS'] = $menuGLaDOS;
         $context['newnav'] = $newnav;
         $context['temp'] = $temp;
 
         // ну и рендерю
-        echo $twig->render($template, $context);
+        //echo $twig->render($template, $context);
+
+        // проверяем если controller не пустой, то рендерим страницу
+        if ($controller) {
+            $controller->get();
+        }
         ?>
     </div> 
 </body>
