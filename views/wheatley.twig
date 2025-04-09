@@ -1,0 +1,37 @@
+{% extends "__layout.twig" %}
+
+{% block content %}
+<h1>Уитли</h1>
+
+<div class="container">
+        <ul class="nav nav-pills">
+        {% for item in newnav %}
+            <li class="nav-item">
+                <a class="nav-link {{ temp == item.title ? 'active' }}" href="/wheatley/{{item.url}}">
+                    {{item.title}}
+                </a>
+            </li>
+        {% endfor %}
+        <!--<li class="nav-item">
+            <a class="nav-link" href="/wheatley/image">
+                Картинка
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/wheatley/info">
+                Описание
+            </a>
+        </li>-->
+        </ul>
+</div>
+
+<div style="margin-top: 15px;">
+        <ul class="list-group">
+                <li class="list-group-item">
+                    {% block dopcontent %}
+                        Выберите вверху информацию, которую хотите увидеть<br>
+                    {% endblock %}
+                </li>
+        </ul>
+</div>
+{% endblock %}
